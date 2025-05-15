@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 
-//Call TextFormField Showmodalproduct
 class CustomTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final String? Function(String?)? validator;
+  final int? maxLines;
+  final String? prefixText;
+  final bool obscureText;
 
   const CustomTextField({
     super.key,
     required this.label,
     required this.controller,
     this.keyboardType = TextInputType.text,
+    this.validator,
+    this.maxLines = 1,
+    this.prefixText,
+    this.obscureText = false,
   });
 
   @override
@@ -24,6 +31,13 @@ class CustomTextField extends StatelessWidget {
           TextFormField(
             controller: controller,
             keyboardType: keyboardType,
+            validator: validator,
+            maxLines: maxLines,
+            obscureText: obscureText,
+            decoration: InputDecoration(
+              prefixText: prefixText,
+              border: const OutlineInputBorder(),
+            ),
           ),
         ],
       ),

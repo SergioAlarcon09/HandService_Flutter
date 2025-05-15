@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql_flutter_crud/presentation/ui/product_ui.dart';
+import 'package:mysql_flutter_crud/presentation/ui/service_ui.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -9,17 +9,23 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'CRUD POSTGRESQL FLUTTER - FLUTTER_RIVERPOD',
+      title: 'Servicios a Domicilio',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue, // Puedes cambiar el color primario
+          brightness: Brightness.light,
+        ),
         useMaterial3: true,
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          elevation: 2,
+        ),
       ),
-      home: const ProductUi(),
+      home: const ServiceUi(),
     );
   }
 }
