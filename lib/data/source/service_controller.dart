@@ -41,7 +41,7 @@ class ServiceController extends StateNotifier<AsyncValue<List<Service>>> {
       if (response.statusCode == 201) {
         await loadServices();
       } else {
-        throw Exception('Error al agregar el servicio');
+        throw Exception('Error a agregar el servicio');
       }
     } catch (error) {
       throw Exception('Error en addService: $error');
