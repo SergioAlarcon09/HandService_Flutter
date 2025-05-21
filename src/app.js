@@ -3,6 +3,7 @@ import cors from "cors";
 import servicesRouter from "./routes/services.routes.js";
 import usersRouter from "./routes/auth-users.routes.js";
 import nivelesEducativosRouter from "./routes/niveles_educativos.routes.js"; 
+import clientesRouter from "./routes/clientes.routes.js";
 //import solicitudesRouter from "./routes/solicitudes.routes.js"; // Futura implementación
 //import prestadoresRouter from "./routes/prestadores.routes.js"; // Futura implementación
 
@@ -13,7 +14,8 @@ app.use(express.json());
 // Rutas 
 app.use("/api", servicesRouter);    //Ruta de servicios
 app.use("/api/auth", usersRouter);   //Ruta de autenticación de usuario
-app.use("/api", nivelesEducativosRouter);   //Ruta de niveles educativos
+app.use("/api", nivelesEducativosRouter);
+app.use("/api", clientesRouter);    //Ruta de niveles educativos
 // app.use("/api/solicitudes", solicitudesRouter); // Descomentar cuando esté implementado
 // app.use("/api/prestadores", prestadoresRouter); // Descomentar cuando esté implementado
 
