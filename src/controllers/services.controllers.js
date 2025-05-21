@@ -80,7 +80,6 @@ export const updateService = async (req, res) => {
 // Eliminar un servicio
 export const deleteService = async (req, res) => {
   try {
-    // En lugar de borrar, cambiamos el estado a false
     const { rowCount } = await pool.query(
       "DELETE FROM servicios WHERE id = $1",
       [req.params.id]
