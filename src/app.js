@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import servicesRouter from "./routes/services.routes.js";
-import usersRouter from "./routes/users.routes.js";
+import usersRouter from "./routes/auth-users.routes.js";
 import nivelesEducativosRouter from "./routes/niveles_educativos.routes.js"; 
 //import solicitudesRouter from "./routes/solicitudes.routes.js"; // Futura implementación
 //import prestadoresRouter from "./routes/prestadores.routes.js"; // Futura implementación
