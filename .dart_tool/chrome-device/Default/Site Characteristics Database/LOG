@@ -1,1 +1,7 @@
-2025/05/20-15:45:50.071 248c Reusing MANIFEST C:\Users\adria\AppData\Local\Temp\flutter_tools.5d66c451\flutter_tools_chrome_device.12cae1c9\Default\Site Characteristics Database/MANIFEST-000001
+2025/05/22-00:16:36.073 5fec Reusing MANIFEST C:\Users\adria\AppData\Local\Temp\flutter_tools.f6045346\flutter_tools_chrome_device.55bf213b\Default\Site Characteristics Database/MANIFEST-000001
+2025/05/22-00:16:36.339 5fec Recovering log #3
+2025/05/22-00:16:36.340 5fec Level-0 table #6: started
+2025/05/22-00:16:36.550 5fec Level-0 table #6: 393 bytes OK
+2025/05/22-00:16:36.550 5fec Recovering log #6
+2025/05/22-00:16:36.551 5fec Reusing old log C:\Users\adria\AppData\Local\Temp\flutter_tools.f6045346\flutter_tools_chrome_device.55bf213b\Default\Site Characteristics Database/000006.log 
+2025/05/22-00:16:36.713 5fec Delete type=0 #3

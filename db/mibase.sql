@@ -94,11 +94,11 @@ INSERT INTO clientes (longitud, latitud, usuario_id) VALUES
 (-75.56359, 6.25184, 2), -- Medellín
 (-76.52197, 3.42158, 3); -- Cali
 
--- Insertar prestadores de servicios
+-- Insertar prestadores de servicios HACER YO
 INSERT INTO prestadores_servicios (profesion, nivel_educativo_id, usuario_id) VALUES
 ('Electricista', 2, 4),
 ('Plomero', 1, 5),
-('Mecánico', 3, 6);
+('Mecánico', 3, 6); // 
 
 -- Insertar servicios
 INSERT INTO servicios (nombre, descripcion, valor) VALUES
@@ -107,14 +107,14 @@ INSERT INTO servicios (nombre, descripcion, valor) VALUES
 ('Cambio de aceite', 'Cambio de aceite y filtro para vehículo', 60000),
 ('Reparación de electrodomésticos', 'Reparación de neveras, lavadoras, etc.', 55000);
 
--- Insertar solicitudes de servicios
+-- Insertar solicitudes de servicios  HACER YO XD
 INSERT INTO solicitudes_servicios (servicio_id, tiempo_estimado, fecha_inicio, fecha_fin, cantidad, valor, cliente_id, prestador_servicio_id, estado) VALUES
 (1, 120, '2023-11-15 10:00:00', '2023-11-15 12:00:00', 1, 50000, 1, 1, 'COMPLETADO'),
 (2, 90, '2023-11-16 14:00:00', '2023-11-16 15:30:00', 1, 45000, 2, 2, 'COMPLETADO'),
 (3, 60, '2023-11-17 09:00:00', '2023-11-17 10:00:00', 1, 60000, 3, 3, 'EN_PROCESO'),
 (1, 120, '2023-11-18 11:00:00', NULL, 1, 50000, 1, NULL, 'PENDIENTE');
 
--- Insertar puntuaciones
+-- Insertar puntuaciones HACER YO XD
 INSERT INTO puntuaciones (puntuacion, solicitud_servicio_id, descripcion) VALUES
 (5, 1, 'Excelente servicio, muy profesional'),
 (4, 2, 'Buen trabajo, pero llegó un poco tarde');

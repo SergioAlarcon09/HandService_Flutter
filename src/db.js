@@ -1,12 +1,9 @@
 import pg from "pg";
-//import dotenv from "dotenv";
+import dotenv from "dotenv";
 
 // Cargar variables de entorno
-//dotenv.config();
+dotenv.config();
 
-//const { Pool } = pg;
-
-// Configuración de la conexión a la base de datos
 const pool = new pg.Pool({
   user: /*process.env.DB_USER ||*/ "postgres",
   host: /*process.env.DB_HOST ||*/ "localhost",
