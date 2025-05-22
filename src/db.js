@@ -10,8 +10,8 @@ import pg from "pg";
 const pool = new pg.Pool({
   user: /*process.env.DB_USER ||*/ "postgres",
   host: /*process.env.DB_HOST ||*/ "localhost",
-  password: /*process.env.DB_PASSWORD ||*/ "1034396905",
-  database: /*process.env.DB_NAME ||*/ "HandService",
+  password: /*process.env.DB_PASSWORD ||*/ "123",
+  database: /*process.env.DB_NAME ||*/ "handservices",
   port: /*process.env.DB_PORT ||*/ "5432",
 });
 
