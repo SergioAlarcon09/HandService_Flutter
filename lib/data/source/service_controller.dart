@@ -67,13 +67,17 @@ class ServiceController extends StateNotifier<AsyncValue<List<Service>>> {
   }
 
   Future<void> deleteService(int? serviceId) async {
+    if (serviceId == null) {
+      throw Exception('ID del servicio no puede ser null');
+    }
+
     try {
       final response = await http.delete(
         Uri.parse('http://192.168.1.4:3001/api/service/$serviceId'),
         headers: {'Content-Type': 'application/json'},
       );
 
-      if (response.statusCode == 204) {
+      if (response.statusCode == 200) {
         await loadServices();
       } else {
         throw Exception('Error al eliminar el servicio');

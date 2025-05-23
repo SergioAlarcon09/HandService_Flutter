@@ -81,7 +81,7 @@ export const updateService = async (req, res) => {
 export const deleteService = async (req, res) => {
   try {
     const { rowCount } = await pool.query(
-      "DELETE FROM servicios WHERE id = $1",
+      "UPDATE servicios SET estado = false WHERE id = $1",
       [req.params.id]
     );
 
@@ -90,7 +90,7 @@ export const deleteService = async (req, res) => {
         message: "Servicio no encontrado",
       });
 
-    res.sendStatus(204);
+    res.status(200).json({ message: "Servicio eliminado lógicamente" });
   } catch (error) {
     return res.status(500).json({
       message: "Error al eliminar el servicio",
