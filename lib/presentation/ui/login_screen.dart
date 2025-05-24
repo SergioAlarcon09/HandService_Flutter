@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mysql_flutter_crud/presentation/ui/service_ui.dart';
+import 'package:mysql_flutter_crud/presentation/ui/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -10,7 +10,7 @@ class LoginScreen extends StatelessWidget {
     final TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F7FC),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -18,96 +18,161 @@ class LoginScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircleAvatar(
-                  radius: 80,
-                  backgroundColor: Colors.white,
-                  child: Icon(Icons.handshake, color: Colors.orange, size: 80),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "HandService",
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87),
-                ),
-                const Text(
-                  "Profesionales de confianza",
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-                const SizedBox(height: 40),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Ingresa tu usuario:"),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    filled: true,
-                    fillColor: Colors.white70,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                // Logo Section
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        spreadRadius: 2,
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 20),
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("Ingresa tu contraseña:"),
-                ),
-                const SizedBox(height: 8),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    filled: true,
-                    fillColor: Colors.white70,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
+                  child: Icon(
+                    Icons.handshake,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 15),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    elevation: 5,
-                  ),
-                  onPressed: () {
-                    // Por ahora simulamos un inicio de sesión exitoso
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ServiceUi()),
-                    );
-                  },
-                  child: const Text("Iniciar Sesion"),
+
+                // Title Section
+                Text(
+                  "HandService",
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "Profesionales de confianza",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onBackground
+                            .withOpacity(0.6),
+                      ),
+                ),
+                const SizedBox(height: 40),
+
+                // Form Section
+                _buildInputField(
+                  context,
+                  controller: emailController,
+                  label: "Ingresa tu usuario:",
+                  hintText: 'Email',
+                  icon: Icons.email,
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("¿Aún no haces parte de nosotros?"),
-                    TextButton(
-                      onPressed: () {
-                        // Aquí podrías navegar a una pantalla de registro en el futuro
-                      },
-                      child: const Text("Regístrate!",
-                          style: TextStyle(color: Colors.orange)),
+                _buildInputField(
+                  context,
+                  controller: passwordController,
+                  label: "Ingresa tu contraseña:",
+                  hintText: 'Password',
+                  icon: Icons.lock,
+                  obscureText: true,
+                ),
+                const SizedBox(height: 30),
+
+                // Login Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
-                  ],
-                )
+                    onPressed: () {
+                      _handleLogin(context);
+                    },
+                    child: const Text("INICIAR SESIÓN"),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Register Section
+                TextButton(
+                  onPressed: () {
+                    // TODO: Add navigation to register screen
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      text: "¿Aún no haces parte de nosotros? ",
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onBackground
+                                .withOpacity(0.6),
+                          ),
+                      children: [
+                        TextSpan(
+                          text: "Regístrate!",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildInputField(
+    BuildContext context, {
+    required TextEditingController controller,
+    required String label,
+    required String hintText,
+    required IconData icon,
+    bool obscureText = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          controller: controller,
+          obscureText: obscureText,
+          decoration: InputDecoration(
+            hintText: hintText,
+            prefixIcon: Icon(icon),
+            filled: true,
+            fillColor: Theme.of(context).colorScheme.surface,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: BorderSide.none,
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal: 20,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _handleLogin(BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/home');
   }
 }
