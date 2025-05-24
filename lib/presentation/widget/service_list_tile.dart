@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql_flutter_crud/data/models/service_model.dart';
-import 'package:mysql_flutter_crud/presentation/widget/show_modal_service.dart';
+import 'package:mysql_flutter_crud/presentation/ui/edit_service_screen.dart';
 import 'package:mysql_flutter_crud/presentation/widget/delete_service_widget.dart';
 import 'package:mysql_flutter_crud/core/providers/service_provider.dart';
 
@@ -28,13 +28,13 @@ class ServiceTile extends ConsumerWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () async {
-                  await showModalBottomSheet(
-                    isScrollControlled: true,
-                    context: context,
-                    builder: (BuildContext context) {
-                      return ShowModalService(
-                        onAdd: (nombre, descripcion, valor) async {
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditServiceScreen(
+                        service: service,
+                        onSave: (nombre, descripcion, valor) async {
                           final updatedService = Service(
                             id: service.id,
                             nombre: nombre,
@@ -45,10 +45,8 @@ class ServiceTile extends ConsumerWidget {
                               .read(serviceControllerProvider.notifier)
                               .updateService(service.id, updatedService);
                         },
-                        isEditMode: true,
-                        editedService: service,
-                      );
-                    },
+                      ),
+                    ),
                   );
                 },
               ),
