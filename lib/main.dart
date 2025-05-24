@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql_flutter_crud/presentation/ui/service_ui.dart';
+import 'package:mysql_flutter_crud/presentation/ui/login_screen.dart'; // RUTA CORRECTA
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -13,10 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Servicios a Domicilio',
+      title: 'HandService',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue, // Puedes cambiar el color primario
+          seedColor: Colors.orange,
           brightness: Brightness.light,
         ),
         useMaterial3: true,
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
           elevation: 2,
         ),
       ),
-      home: const ServiceUi(),
+      home: const LoginScreen(),
     );
   }
 }

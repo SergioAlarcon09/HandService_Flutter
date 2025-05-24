@@ -13,7 +13,6 @@ class ServiceUi extends ConsumerStatefulWidget {
 }
 
 class ServiceUiState extends ConsumerState<ServiceUi> {
-  
   @override
   void initState() {
     super.initState();
