@@ -79,9 +79,8 @@ class _ShowModalServiceState extends State<ShowModalService> {
             CustomTextField(
               label: 'Nombre del Servicio*',
               controller: _nombreController,
-              validator: (value) => value?.isEmpty ?? true 
-                  ? 'Este campo es obligatorio' 
-                  : null,
+              validator: (value) =>
+                  value?.isEmpty ?? true ? 'Este campo es obligatorio' : null,
             ),
             CustomTextField(
               label: 'Descripción',
