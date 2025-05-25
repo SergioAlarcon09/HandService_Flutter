@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysql_flutter_crud/presentation/ui/home_screen.dart';
+import 'package:mysql_flutter_crud/presentation/ui/registration/registration_type_screen.dart'; // Importa la pantalla de selección
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -98,10 +99,15 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // Register Section
+                // Register Section - MODIFICADO
                 TextButton(
                   onPressed: () {
-                    // TODO: Add navigation to register screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const RegistrationTypeScreen(),
+                      ),
+                    );
                   },
                   child: RichText(
                     text: TextSpan(
