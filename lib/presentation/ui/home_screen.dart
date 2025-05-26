@@ -1,6 +1,6 @@
-// lib/presentation/ui/home_screen.dart
 import 'package:flutter/material.dart';
-import 'package:mysql_flutter_crud/presentation/ui/service_ui.dart'; // Import your existing ServiceUi
+import 'package:mysql_flutter_crud/presentation/ui/service_ui.dart';
+import 'package:mysql_flutter_crud/presentation/ui/appointment_ui.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,19 +27,53 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildCard(context, 'PROVEEDORES', Icons.people, '/providers'),
-              _buildCard(context, 'USUARIOS', Icons.person, '/users'),
-              _buildCard(context, 'SERVICIOS', Icons.handyman, () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ServiceUi()),
-                );
-              }),
-            ],
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  top: 40.0, bottom: 20.0), // Aumenté el top padding
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Primera fila de tarjetas
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 20.0), // Espacio entre filas
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildCard(
+                            context, 'PROVEEDORES', Icons.people, '/providers'),
+                        const SizedBox(width: 20), // Espacio entre tarjetas
+                        _buildCard(context, 'USUARIOS', Icons.person, '/users'),
+                      ],
+                    ),
+                  ),
+                  // Segunda fila de tarjetas
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildCard(context, 'SERVICIOS', Icons.handyman, () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ServiceUi()),
+                        );
+                      }),
+                      const SizedBox(width: 20), // Espacio entre tarjetas
+                      _buildCard(context, 'AGENDAMIENTO', Icons.calendar_today,
+                          () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AppointmentUi()),
+                        );
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -49,7 +83,7 @@ class HomeScreen extends StatelessWidget {
   Widget _buildCard(
       BuildContext context, String title, IconData icon, dynamic action) {
     return Card(
-      margin: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(12),
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -64,22 +98,33 @@ class HomeScreen extends StatelessWidget {
           }
         },
         child: Container(
-          width: 250,
-          height: 120,
-          padding: const EdgeInsets.all(20),
+          width: 160,
+          height: 160,
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon,
-                  size: 40, color: Theme.of(context).colorScheme.primary),
-              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  icon,
+                  size: 36,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(height: 12),
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
