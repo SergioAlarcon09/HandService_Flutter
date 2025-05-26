@@ -1,133 +1,158 @@
 import 'package:flutter/material.dart';
-import 'package:mysql_flutter_crud/data/models/service_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateServiceScreen extends StatefulWidget {
-  final Function(String, String, double) onCreate;
+class CreateServiceScreen extends ConsumerStatefulWidget {
+  final Future<void> Function(String nombre, String descripcion, double valor)?
+      onCreate;
 
-  const CreateServiceScreen({
-    super.key,
-    required this.onCreate,
-  });
+  const CreateServiceScreen({Key? key, this.onCreate}) : super(key: key);
 
   @override
-  State<CreateServiceScreen> createState() => _CreateServiceScreenState();
+  ConsumerState<CreateServiceScreen> createState() =>
+      _CreateServiceScreenState();
 }
 
-class _CreateServiceScreenState extends State<CreateServiceScreen> {
+class _CreateServiceScreenState extends ConsumerState<CreateServiceScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nombreController = TextEditingController();
-  final _descripcionController = TextEditingController();
-  final _valorController = TextEditingController();
+
+  String? _nombre;
+  String? _descripcion;
+  double? _valor;
+
+  bool _isSubmitting = false;
+
+  // Controladores (opcional)
+  final TextEditingController _valorController = TextEditingController();
+
+  @override
+  void dispose() {
+    _valorController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    _formKey.currentState!.save();
+
+    if (_nombre == null || _descripcion == null || _valor == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Por favor completa todos los campos correctamente.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    try {
+      if (widget.onCreate != null) {
+        await widget.onCreate!(_nombre!, _descripcion!, _valor!);
+      }
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error al crear servicio: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Servicio'),
+        title: const Text('Crear Servicio'),
         backgroundColor: Colors.orange,
-        foregroundColor: Colors.white,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 20),
-                const Text(
-                  'Nuevo Servicio',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.orange,
-                  ),
-                  textAlign: TextAlign.center,
+        padding: const EdgeInsets.all(16),
+        child: _isSubmitting
+            ? const Center(child: CircularProgressIndicator())
+            : Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Nombre',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Ingresa el nombre del servicio';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _nombre = value!.trim(),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Descripción',
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Ingresa la descripción';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) => _descripcion = value!.trim(),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _valorController,
+                      decoration: const InputDecoration(
+                        labelText: 'Valor',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      validator: (value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return 'Ingresa el valor';
+                        }
+                        final parsed = double.tryParse(value);
+                        if (parsed == null || parsed <= 0) {
+                          return 'Ingresa un valor numérico válido mayor que 0';
+                        }
+                        return null;
+                      },
+                      onSaved: (value) =>
+                          _valor = double.tryParse(value!.trim()),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      onPressed: _submit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                      ),
+                      child: const Text(
+                        'Crear Servicio',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    )
+                  ],
                 ),
-                const SizedBox(height: 30),
-                TextFormField(
-                  controller: _nombreController,
-                  decoration: const InputDecoration(
-                    labelText: 'Nombre del servicio',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.badge),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un nombre';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: _descripcionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Descripción',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.description),
-                  ),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: _valorController,
-                  decoration: const InputDecoration(
-                    labelText: 'Valor',
-                    border: OutlineInputBorder(),
-                    prefixIcon: Icon(Icons.attach_money),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un valor';
-                    }
-                    if (double.tryParse(value) == null) {
-                      return 'Ingrese un número válido';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: _submitForm,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                  ),
-                  child: const Text('Guardar Servicio'),
-                ),
-                const SizedBox(height: 15),
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancelar'),
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      widget.onCreate(
-        _nombreController.text,
-        _descripcionController.text,
-        double.parse(_valorController.text),
-      );
-      Navigator.pop(context);
-    }
-  }
-
-  @override
-  void dispose() {
-    _nombreController.dispose();
-    _descripcionController.dispose();
-    _valorController.dispose();
-    super.dispose();
   }
 }

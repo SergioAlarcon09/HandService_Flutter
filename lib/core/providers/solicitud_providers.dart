@@ -15,9 +15,15 @@ final solicitudesListProvider = Provider<List<SolicitudServicio>>((ref) {
 });
 
 final solicitudLoadingProvider = Provider<bool>((ref) {
-  return ref.watch(solicitudControllerProvider).isLoading;
+  return ref.watch(solicitudControllerProvider).maybeWhen(
+        loading: () => true,
+        orElse: () => false,
+      );
 });
 
 final solicitudErrorProvider = Provider<String?>((ref) {
-  return ref.watch(solicitudControllerProvider).error?.toString();
+  return ref.watch(solicitudControllerProvider).maybeWhen(
+        error: (error, _) => error.toString(),
+        orElse: () => null,
+      );
 });
