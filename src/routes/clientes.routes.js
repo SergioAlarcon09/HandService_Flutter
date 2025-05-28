@@ -6,14 +6,13 @@ import {
     updateCliente,
     deleteCliente
 } from "../controllers/clientes.controllers.js";
-import { authenticateToken } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.get("/clientes", authenticateToken, getAllClientes);
-router.get("/clientes/:id", authenticateToken, getClienteById);
-router.post("/clientes", authenticateToken, createCliente);
-router.patch("/clientes/:id", authenticateToken, updateCliente);
-router.delete("/clientes/:id", authenticateToken, deleteCliente);
+router.get("/clientes", getAllClientes);
+router.get("/clientes/:id",getClienteById);
+router.post("/clientes", createCliente);
+router.patch("/clientes/:id", updateCliente);
+router.delete("/clientes/:id", deleteCliente);
 
 export default router;

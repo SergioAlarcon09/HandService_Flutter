@@ -7,8 +7,7 @@ import {
     getUserById,
     updateUser,
     deleteUser
-} from "../controllers/auth-users.controllers.js";
-import { authenticateToken } from "../middlewares/auth.middleware.js";
+} from "../controllers/auth.js";
 
 const router = Router();
 
@@ -17,12 +16,12 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // Rutas protegidas por autenticación
-router.get("/profile", authenticateToken, getUserProfile);
+router.get("/profile", getUserProfile);
 
 // Rutas para administración de usuarios
-router.get("/users", authenticateToken, getAllUsers);
-router.get("/users/:id", authenticateToken, getUserById);
-router.patch("/users/:id", authenticateToken, updateUser);
-router.delete("/users/:id", authenticateToken, deleteUser);
+router.get("/users", getAllUsers);
+router.get("/users/:id", getUserById);
+router.patch("/users/:id", updateUser);
+router.delete("/users/:id", deleteUser);
 
 export default router;
