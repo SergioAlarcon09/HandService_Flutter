@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql_flutter_crud/core/presentations/widgets/auth_dialog.dart';
+import 'package:mysql_flutter_crud/core/presentations/auth-widgets/auth_dialog.dart';
 import 'package:mysql_flutter_crud/core/presentations/second_screen.dart';
 import 'package:mysql_flutter_crud/core/providers/auth_provider.dart';
 

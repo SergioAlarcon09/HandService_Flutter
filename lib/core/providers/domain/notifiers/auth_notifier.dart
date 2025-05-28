@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql_flutter_crud/core/presentations/widgets/auth_dialog.dart';
+import 'package:mysql_flutter_crud/core/presentations/auth-widgets/auth_dialog.dart';
 import 'package:mysql_flutter_crud/core/providers/auth_storage.dart';
-import 'package:mysql_flutter_crud/core/providers/services/auth_services.dart';
+import 'package:mysql_flutter_crud/core/providers/auth-services/auth_services.dart';
 
 class AuthNotifier extends StateNotifier<String?> {
   final Ref ref;

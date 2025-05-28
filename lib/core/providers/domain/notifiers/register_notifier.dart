@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:mysql_flutter_crud/core/presentations/widgets/pass_error.dart';
+import 'package:mysql_flutter_crud/core/presentations/auth-widgets/pass_error.dart';
 import 'package:mysql_flutter_crud/core/providers/auth_storage.dart';
-import 'package:mysql_flutter_crud/core/providers/services/auth_services.dart';
+import 'package:mysql_flutter_crud/core/providers/auth-services/auth_services.dart';
 
 class RegisterNotifier extends StateNotifier<String?> {
   final Ref ref;
