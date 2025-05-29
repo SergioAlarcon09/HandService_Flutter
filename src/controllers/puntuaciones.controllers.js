@@ -1,65 +1,91 @@
 import pool from "../db.js";
 
-// Obtener todos los prestadores
-export const getPrestadores = async (req, res) => {
+// Obtener todas las puntuaciones
+export const getPuntuaciones = async (req, res) => {
     try {
-        const { rows } = await pool.query("SELECT * FROM prestadores_servicios");
+        const { rows } = await pool.query("SELECT * FROM puntuaciones");
         res.json(rows);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener prestadores" });
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener las puntuaciones" });
     }
 };
 
-// Obtener uno por ID
-export const getPrestador = async (req, res) => {
-    try {
-        const { rows } = await pool.query("SELECT * FROM prestadores_servicios WHERE id = $1", [req.params.id]);
-        if (rows.length === 0) return res.status(404).json({ message: "Prestador no encontrado" });
-        res.json(rows[0]);
-    } catch (error) {
-        res.status(500).json({ message: "Error al obtener prestador" });
-    }
-};
-
-// Crear uno nuevo
-export const createPrestador = async (req, res) => {
-    const { profesion, nivel_educativo_id, usuario_id } = req.body;
+// Obtener una puntuación por ID
+export const getPuntuacion = async (req, res) => {
     try {
         const { rows } = await pool.query(
-            "INSERT INTO prestadores_servicios (profesion, nivel_educativo_id, usuario_id) VALUES ($1, $2, $3) RETURNING *",
-            [profesion, nivel_educativo_id, usuario_id]
+            "SELECT * FROM puntuaciones WHERE id = $1",
+            [req.params.id]
+        );
+        if (rows.length === 0) {
+            return res.status(404).json({ message: "Puntuación no encontrada" });
+        }
+        res.json(rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error al obtener la puntuación" });
+    }
+};
+
+// Crear una nueva puntuación
+export const createPuntuacion = async (req, res) => {
+    const { puntuacion, solicitud_servicio_id, descripcion, evidencia } = req.body;
+
+    try {
+        const { rows } = await pool.query(
+            `INSERT INTO puntuaciones (puntuacion, solicitud_servicio_id, descripcion, evidencia)
+       VALUES ($1, $2, $3, $4) RETURNING *`,
+            [puntuacion, solicitud_servicio_id, descripcion, evidencia]
         );
         res.status(201).json(rows[0]);
     } catch (error) {
-        res.status(500).json({ message: "Error al crear prestador" });
+        console.error(error);
+        res.status(500).json({ message: "Error al crear la puntuación" });
     }
 };
 
-// Actualizar uno
-export const updatePrestador = async (req, res) => {
+// Actualizar una puntuación
+export const updatePuntuacion = async (req, res) => {
     const { id } = req.params;
-    const { profesion, nivel_educativo_id, usuario_id } = req.body;
+    const { puntuacion, solicitud_servicio_id, descripcion, evidencia } = req.body;
+
     try {
         const { rowCount } = await pool.query(
-            "UPDATE prestadores_servicios SET profesion = COALESCE($1, profesion), nivel_educativo_id = COALESCE($2, nivel_educativo_id), usuario_id = COALESCE($3, usuario_id) WHERE id = $4",
-            [profesion, nivel_educativo_id, usuario_id, id]
+            `UPDATE puntuaciones SET 
+         puntuacion = COALESCE($1, puntuacion), 
+         solicitud_servicio_id = COALESCE($2, solicitud_servicio_id), 
+         descripcion = COALESCE($3, descripcion), 
+         evidencia = COALESCE($4, evidencia) 
+       WHERE id = $5`,
+            [puntuacion, solicitud_servicio_id, descripcion, evidencia, id]
         );
-        if (rowCount === 0) return res.status(404).json({ message: "Prestador no encontrado" });
 
-        const { rows } = await pool.query("SELECT * FROM prestadores_servicios WHERE id = $1", [id]);
+        if (rowCount === 0)
+            return res.status(404).json({ message: "Puntuación no encontrada" });
+
+        const { rows } = await pool.query("SELECT * FROM puntuaciones WHERE id = $1", [id]);
         res.json(rows[0]);
     } catch (error) {
-        res.status(500).json({ message: "Error al actualizar prestador" });
+        console.error(error);
+        res.status(500).json({ message: "Error al actualizar la puntuación" });
     }
 };
 
-// Eliminar uno
-export const deletePrestador = async (req, res) => {
+// Eliminar una puntuación
+export const deletePuntuacion = async (req, res) => {
     try {
-        const { rowCount } = await pool.query("DELETE FROM prestadores_servicios WHERE id = $1", [req.params.id]);
-        if (rowCount === 0) return res.status(404).json({ message: "Prestador no encontrado" });
+        const { rowCount } = await pool.query(
+            "DELETE FROM puntuaciones WHERE id = $1",
+            [req.params.id]
+        );
+
+        if (rowCount === 0)
+            return res.status(404).json({ message: "Puntuación no encontrada" });
+
         res.sendStatus(204);
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar prestador" });
+        console.error(error);
+        res.status(500).json({ message: "Error al eliminar la puntuación" });
     }
 };
