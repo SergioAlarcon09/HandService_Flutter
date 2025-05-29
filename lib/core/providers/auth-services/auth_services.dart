@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+//! NO TOCAR
+
 class AuthService {
   Future<String?> login(String email, String password) async {
     final response = await http.post(

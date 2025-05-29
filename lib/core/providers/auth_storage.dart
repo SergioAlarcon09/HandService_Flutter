@@ -1,6 +1,8 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
+//! NO TOCAR
+
 class AuthStorage {
   static final AuthStorage _instance = AuthStorage._internal();
   static Database? _database;

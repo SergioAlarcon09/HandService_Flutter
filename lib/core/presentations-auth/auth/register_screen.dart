@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql_flutter_crud/core/presentations/auth-widgets/pass_error.dart';
+import 'package:mysql_flutter_crud/core/presentations-auth/auth-widgets/pass_error.dart';
 import 'package:mysql_flutter_crud/core/providers/utils/register_utils.dart';
+
+//! MODIFICAR PARA FRONT
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});

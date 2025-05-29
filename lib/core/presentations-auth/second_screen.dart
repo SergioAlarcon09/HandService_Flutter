@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql_flutter_crud/core/providers/auth_storage.dart';
-import 'package:mysql_flutter_crud/core/presentations/auth/login_page.dart';
+import 'package:mysql_flutter_crud/core/presentations-auth/auth/login_page.dart';
 import 'package:mysql_flutter_crud/core/providers/auth_provider.dart';
 
+//! MODIFICAR PARA FRONT
 
 class SecondScreen extends ConsumerStatefulWidget {
   const SecondScreen({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql_flutter_crud/data/models/service_model.dart';
-import 'package:mysql_flutter_crud/presentation/widget/show_modal_service.dart';
-import 'package:mysql_flutter_crud/presentation/widget/delete_service_widget.dart';
+import 'package:mysql_flutter_crud/presentation-servicios/widget-service/show_modal_service.dart';
+import 'package:mysql_flutter_crud/presentation-servicios/widget-service/delete_service_widget.dart';
 import 'package:mysql_flutter_crud/core/providers/service_provider.dart';
 
 class ServiceTile extends ConsumerWidget {

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql_flutter_crud/core/presentations/auth/register_screen.dart';
+import 'package:mysql_flutter_crud/core/presentations-auth/auth/register_screen.dart';
 import 'package:mysql_flutter_crud/core/providers/utils/auth_utils.dart';
+
+//! MODIFICAR PARA FRONT
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});

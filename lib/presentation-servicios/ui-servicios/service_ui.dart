@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql_flutter_crud/core/providers/service_provider.dart';
 import 'package:mysql_flutter_crud/data/models/service_model.dart';
-import 'package:mysql_flutter_crud/presentation/widget/show_modal_service.dart';
-import '../widget/service_list_tile.dart';
+import 'package:mysql_flutter_crud/presentation-servicios/widget-service/show_modal_service.dart';
+import '../widget-service/service_list_tile.dart';
+
+
+//! IMPLEMENTAR EN PÁGINA, NO SE MUESTRA. MODIFICAR PARA FRONT
 
 class ServiceUi extends ConsumerStatefulWidget {
   const ServiceUi({super.key});

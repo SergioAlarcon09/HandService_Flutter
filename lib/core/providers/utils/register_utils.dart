@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mysql_flutter_crud/core/presentations/second_screen.dart';
-import 'package:mysql_flutter_crud/core/presentations/auth-widgets/pass_error.dart';
+import 'package:mysql_flutter_crud/core/presentations-auth/second_screen.dart';
+import 'package:mysql_flutter_crud/core/presentations-auth/auth-widgets/pass_error.dart';
 import 'package:mysql_flutter_crud/core/providers/register_provider.dart';
+
+//! NO TOCAR
 
 Future<void> register(
     BuildContext context,
