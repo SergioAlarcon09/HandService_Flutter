@@ -9,7 +9,7 @@ class SolicitudController extends StateNotifier<AsyncValue<List<Solicitud>>> {
   }
 
   final Ref ref;
-  final String baseUrl = 'http://192.168.18.69:3001/api/solicitudes-servicios';
+  final String baseUrl = 'http://192.168.1.4:3001/api/solicitudes-servicios';
 
   Future<void> loadSolicitudes() async {
     try {

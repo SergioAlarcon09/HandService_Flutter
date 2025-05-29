@@ -16,7 +16,9 @@ class ServiceUiState extends ConsumerState<ServiceUi> {
   @override
   void initState() {
     super.initState();
-    ref.read(serviceControllerProvider.notifier).reloadServices();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(serviceControllerProvider.notifier).reloadServices();
+    });
   }
 
   @override
