@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mysql_flutter_crud/data/models/service_model.dart';
-import 'package:mysql_flutter_crud/presentation-servicios/widget-service/action_button.dart';
+import 'package:mysql_flutter_crud/presentation-servicios/widget-service/action_button_service.dart';
+import 'package:mysql_flutter_crud/presentation-servicios/widget-service/custom_text_field_service.dart';
 import 'package:mysql_flutter_crud/presentation-servicios/widget-service/init_service_form.dart';
-import 'package:mysql_flutter_crud/presentation-servicios/widget-service/custom_text_field.dart';
 
 class ShowModalService extends StatefulWidget {
   final void Function(String nombre, String descripcion, double valor) onAdd;
