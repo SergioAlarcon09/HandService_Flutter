@@ -9,7 +9,7 @@ class PuntuacionController extends StateNotifier<AsyncValue<List<Puntuacion>>> {
   }
 
   final Ref ref;
-  final String baseUrl = 'http://192.168.1.4:3001/api/puntuaciones';
+  final String baseUrl = 'http://192.168.18.69:3001/api/puntuaciones';
 
   Future<void> loadPuntuaciones() async {
     try {
@@ -47,7 +47,8 @@ class PuntuacionController extends StateNotifier<AsyncValue<List<Puntuacion>>> {
     }
   }
 
-  Future<void> updatePuntuacion(int? puntuacionId, Puntuacion updatedPuntuacion) async {
+  Future<void> updatePuntuacion(
+      int? puntuacionId, Puntuacion updatedPuntuacion) async {
     try {
       final response = await http.patch(
         Uri.parse('$baseUrl/$puntuacionId'),

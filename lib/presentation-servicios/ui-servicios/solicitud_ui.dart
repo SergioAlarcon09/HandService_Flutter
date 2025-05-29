@@ -16,20 +16,38 @@ class SolicitudUiState extends ConsumerState<SolicitudUi> {
   @override
   void initState() {
     super.initState();
-    ref.read(solicitudControllerProvider.notifier).reloadSolicitudes();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(solicitudControllerProvider.notifier).reloadSolicitudes();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final solicitudes = ref.watch(solicitudProvider);
+
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F7FB),
       appBar: AppBar(
-        title: const Text('Solicitudes de Servicio'),
+        backgroundColor: const Color(0xFFFF6600),
+        title: const Text(
+          'Solicitudes de Servicio',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
+        ),
         actions: [
-          ElevatedButton(
+          IconButton(
+            icon: const Icon(Icons.add),
+            color: Colors.white,
+            tooltip: 'Nueva Solicitud',
             onPressed: () {
               showModalBottomSheet(
                 isScrollControlled: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
+                ),
                 context: context,
                 builder: (BuildContext context) {
                   return ShowModalSolicitud(
@@ -44,13 +62,19 @@ class SolicitudUiState extends ConsumerState<SolicitudUi> {
                       prestadorServicioId,
                       estado,
                     ) async {
+                      final valorDouble = valor is String
+                          ? double.tryParse(valor as String) ?? 0.0
+                          : valor is num
+                              ? valor.toDouble()
+                              : 0.0;
+
                       final newSolicitud = Solicitud(
                         servicioId: servicioId,
                         tiempoEstimado: tiempoEstimado,
                         fechaInicio: fechaInicio,
                         fechaFin: fechaFin,
                         cantidad: cantidad,
-                        valor: valor,
+                        valor: valorDouble,
                         clienteId: clienteId,
                         prestadorServicioId: prestadorServicioId,
                         estado: estado,
@@ -58,27 +82,69 @@ class SolicitudUiState extends ConsumerState<SolicitudUi> {
                       await ref
                           .read(solicitudControllerProvider.notifier)
                           .addSolicitud(newSolicitud);
+                      ref
+                          .read(solicitudControllerProvider.notifier)
+                          .reloadSolicitudes();
                     },
                   );
                 },
               );
             },
-            child: const Text('Nueva Solicitud'),
           ),
         ],
       ),
-      body: solicitudes.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
-        data: (solicitudList) {
-          return ListView.builder(
-            itemCount: solicitudList.length,
-            itemBuilder: (context, index) {
-              final solicitud = solicitudList[index];
-              return SolicitudTile(solicitud: solicitud);
-            },
-          );
+      body: RefreshIndicator(
+        color: const Color(0xFFFF6600),
+        onRefresh: () async {
+          await ref
+              .read(solicitudControllerProvider.notifier)
+              .reloadSolicitudes();
         },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: solicitudes.when(
+            loading: () => const Center(
+              child: CircularProgressIndicator(color: Color(0xFFFF6600)),
+            ),
+            error: (error, stackTrace) => Center(
+              child: Text(
+                'Error: $error',
+                style: const TextStyle(color: Colors.red),
+              ),
+            ),
+            data: (solicitudList) {
+              if (solicitudList.isEmpty) {
+                return const Center(
+                  child: Text(
+                    'No hay solicitudes disponibles',
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                  ),
+                );
+              }
+              return ListView.builder(
+                itemCount: solicitudList.length,
+                itemBuilder: (context, index) {
+                  final solicitud = solicitudList[index];
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.15),
+                          spreadRadius: 5,
+                          blurRadius: 10,
+                        ),
+                      ],
+                    ),
+                    child: SolicitudTile(solicitud: solicitud),
+                  );
+                },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

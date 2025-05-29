@@ -9,7 +9,7 @@ class PrestadorController extends StateNotifier<AsyncValue<List<Prestador>>> {
   }
 
   final Ref ref;
-  final String baseUrl = 'http://192.168.1.4:3001/api/prestadores-servicios';
+  final String baseUrl = 'http://192.168.18.69/api/prestadores-servicios';
 
   Future<void> loadPrestadores() async {
     try {

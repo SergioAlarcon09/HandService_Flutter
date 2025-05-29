@@ -25,16 +25,18 @@ class Solicitud {
 
   factory Solicitud.fromJson(Map<String, dynamic> json) {
     return Solicitud(
-      id: json['id'],
-      servicioId: json['servicio_id'],
-      tiempoEstimado: json['tiempo_estimado'],
-      fechaInicio: DateTime.parse(json['fecha_inicio']),
-      fechaFin: DateTime.parse(json['fecha_fin']),
-      cantidad: json['cantidad'],
-      valor: json['valor'].toDouble(),
-      clienteId: json['cliente_id'],
-      prestadorServicioId: json['prestador_servicio_id'],
-      estado: json['estado'],
+      id: json['id'] as int?,
+      servicioId: json['servicio_id'] as int,
+      tiempoEstimado: json['tiempo_estimado'] as int,
+      fechaInicio: DateTime.parse(json['fecha_inicio'] as String),
+      fechaFin: json['fecha_fin'] != null
+          ? DateTime.parse(json['fecha_fin'] as String)
+          : null,
+      cantidad: json['cantidad'] as int,
+      valor: double.parse(json['valor'].toString()),
+      clienteId: json['cliente_id'] as int,
+      prestadorServicioId: json['prestador_servicio_id'] as int?,
+      estado: json['estado'] as String,
     );
   }
 

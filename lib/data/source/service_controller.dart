@@ -9,7 +9,7 @@ class ServiceController extends StateNotifier<AsyncValue<List<Service>>> {
   }
 
   final Ref ref;
-  final String baseUrl = 'http://192.168.1.4:3001/api/services';
+  final String baseUrl = 'http://192.168.18.69:3001/api/services';
 
   Future<void> loadServices() async {
     try {
@@ -51,7 +51,7 @@ class ServiceController extends StateNotifier<AsyncValue<List<Service>>> {
   Future<void> updateService(int? serviceId, Service updatedService) async {
     try {
       final response = await http.patch(
-        Uri.parse('http://192.168.1.4:3001/api/service/$serviceId'),
+        Uri.parse('http://192.168.18.69:3001/api/service/$serviceId'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(updatedService.toJson()),
       );
@@ -69,7 +69,7 @@ class ServiceController extends StateNotifier<AsyncValue<List<Service>>> {
   Future<void> deleteService(int? serviceId) async {
     try {
       final response = await http.delete(
-        Uri.parse('http://192.168.1.4:3001/api/service/$serviceId'),
+        Uri.parse('http://192.168.18.69:3001/api/service/$serviceId'),
         headers: {'Content-Type': 'application/json'},
       );
 
